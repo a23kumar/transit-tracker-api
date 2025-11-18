@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'com.transittracker'
+version = '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Protobuf Java library
+    implementation 'com.google.protobuf:protobuf-java:3.25.1'
+    
+    // GTFS Realtime bindings from local JAR
+    implementation files('libs/gtfs-realtime-bindings.jar')
+    
+    // JUnit 5 for testing
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'com.transittracker.App'
+}
+
