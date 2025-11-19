@@ -1,80 +1,114 @@
 # Transit Tracker API
 
-A Java-based API for tracking transit information.
+A real-time GraphQL API for tracking transit information, built with Spring Boot and Kafka.
+
+## Features
+
+*   **GraphQL API**: Query for trips, vehicles, and stop times.
+*   **Real-time Updates**: Subscribe to live trip updates via GraphQL Subscriptions (WebSockets).
+*   **Kafka Integration**: Publishes and consumes GTFS Realtime data using Kafka.
+*   **Automatic Polling**: Fetches data from the GTFS Realtime feed every 30 seconds.
+*   **Filtering**: Filter trips by `routeId` and `vehicleId`.
 
 ## Prerequisites
 
-- Java 21 or higher
-- Gradle 7.0 or higher (or use the Gradle Wrapper)
+*   Java 21 or higher
+*   Docker & Docker Compose (for Kafka)
 
-## Building the Project
+## Getting Started
 
-To compile the project:
-
-```bash
-./gradlew build
-```
-
-Or if you have Gradle installed globally:
+### 1. Start Infrastructure
+Start the Kafka and Zookeeper containers:
 
 ```bash
-gradle build
+docker-compose up -d # If you do not want to see logs
+docker-compose up # If you want to see logs
 ```
 
-To run the application:
+### 2. Run the Application
+Start the Spring Boot server:
 
 ```bash
-./gradlew run
+./gradlew bootRun
 ```
 
-Or:
+The server will start on `http://localhost:8080`.
 
-```bash
-gradle run
+### 3. Access the API
+Open the custom GraphiQL interface in your browser:
+
+**[http://localhost:8080/graphiql.html](http://localhost:8080/graphiql.html)**
+
+## API Usage
+
+### Queries
+
+**Get all trips:**
+```graphql
+query {
+  trips {
+    tripId
+    routeId
+    vehicle {
+      id
+      label
+    }
+  }
+}
 ```
 
-To build a JAR:
-
-```bash
-./gradlew build
+**Filter trips by Route and Vehicle:**
+```graphql
+query {
+  trips(routeId: "301", vehicleId: "21501") {
+    tripId
+    routeId
+    vehicle {
+      label
+    }
+  }
+}
 ```
 
-The JAR will be located at `build/libs/transit-tracker-api-1.0.0-SNAPSHOT.jar`
+### Subscriptions
 
-## Running Tests
-
-```bash
-./gradlew test
+**Subscribe to all updates:**
+```graphql
+subscription {
+  feedUpdates {
+    timestamp
+    trips {
+      tripId
+      stopTimeUpdates {
+        stopSequence
+        arrival {
+          delay
+        }
+      }
+    }
+  }
+}
 ```
 
-Or:
-
-```bash
-gradle test
-```
-
-## Project Structure
-
-```
-transit-tracker-api/
-├── src/
-│   ├── main/
-│   │   └── java/
-│   │       └── com/
-│   │           └── transittracker/
-│   │               └── App.java
-│   └── test/
-│       └── java/
-│           └── com/
-│               └── transittracker/
-│                   └── AppTest.java
-├── build.gradle
-├── settings.gradle
-└── README.md
+**Subscribe to updates for a specific route:**
+```graphql
+subscription {
+  feedUpdates(routeId: "301") {
+    timestamp
+    trips {
+      tripId
+      vehicle {
+        label
+      }
+    }
+  }
+}
 ```
 
 ## Development
 
-Start developing by modifying the `App.java` file in `src/main/java/com/transittracker/`.
+To run with hot reloading (automatically restarts on file changes):
 
-
+```bash
+./gradlew bootRun --continuous
+```
