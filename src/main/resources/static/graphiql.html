@@ -23,16 +23,23 @@
     <!-- GraphiQL -->
     <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/graphiql/3.0.6/graphiql.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/graphiql/3.0.6/graphiql.min.css" />
+
+    <!-- graphql-ws (Standard WebSocket Client) -->
+    <script src="https://unpkg.com/graphql-ws/umd/graphql-ws.min.js"></script>
 </head>
 
 <body>
     <div id="graphiql">Loading...</div>
     <script>
         const root = ReactDOM.createRoot(document.getElementById('graphiql'));
+
         const fetcher = GraphiQL.createFetcher({
             url: '/graphql',
-            subscriptionUrl: 'ws://' + window.location.host + '/graphql',
+            wsClient: graphqlWs.createClient({
+                url: 'ws://' + window.location.host + '/graphql',
+            }),
         });
+
         root.render(
             React.createElement(GraphiQL, {
                 fetcher,
