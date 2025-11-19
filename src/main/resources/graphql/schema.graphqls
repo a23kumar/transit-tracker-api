@@ -1,0 +1,37 @@
+type Query {
+    trips(routeId: String, vehicleId: String): [Trip]
+}
+
+type Subscription {
+    feedUpdates(routeId: String): TripUpdateEvent
+}
+
+type TripUpdateEvent {
+    trips: [Trip]
+    timestamp: Float
+}
+
+type Trip {
+    tripId: String
+    routeId: String
+    scheduleRelationship: String
+    vehicle: Vehicle
+    stopTimeUpdates: [StopTimeUpdate]
+}
+
+type Vehicle {
+    id: String
+    label: String
+}
+
+type StopTimeUpdate {
+    stopSequence: Int
+    stopId: String
+    arrival: StopTimeEvent
+    departure: StopTimeEvent
+}
+
+type StopTimeEvent {
+    time: Float
+    delay: Int
+}

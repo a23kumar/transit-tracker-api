@@ -1,6 +1,7 @@
 plugins {
     id 'java'
-    id 'application'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com.transittracker'
@@ -16,22 +17,23 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'org.springframework.kafka:spring-kafka'
+    
     // Protobuf Java library
     implementation 'com.google.protobuf:protobuf-java:3.25.1'
     
     // GTFS Realtime bindings from local JAR
     implementation files('libs/gtfs-realtime-bindings.jar')
     
-    // JUnit 5 for testing
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.graphql:spring-graphql-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 test {
     useJUnitPlatform()
-}
-
-application {
-    mainClass = 'com.transittracker.App'
 }
 

@@ -10,7 +10,7 @@ import java.time.Duration;
 public class ApiConfig {
     public static final String GTFS_REALTIME_URL = "https://webapps.regionofwaterloo.ca/api/grt-routes/api/tripupdates";
     public static final URI GTFS_REALTIME_URI = URI.create(GTFS_REALTIME_URL);
-    
+
     private static final HttpClient HTTP_CLIENT = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))
             .build();
@@ -29,4 +29,3 @@ public class ApiConfig {
         return GTFS_REALTIME_URI;
     }
 }
-

@@ -7,6 +7,7 @@ import com.transittracker.model.*;
 import com.google.transit.realtime.GtfsRealtime.FeedMessage;
 import com.google.transit.realtime.GtfsRealtime.FeedEntity;
 import com.google.transit.realtime.GtfsRealtime.TripUpdate;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.http.HttpClient;
@@ -18,15 +19,12 @@ import java.util.List;
 /**
  * Service for fetching and parsing GTFS Realtime data
  */
+@Service
 public class GtfsRealtimeService {
     private final HttpClient httpClient;
 
     public GtfsRealtimeService() {
         this.httpClient = ApiConfig.getHttpClient();
-    }
-
-    public GtfsRealtimeService(HttpClient httpClient) {
-        this.httpClient = httpClient;
     }
 
     /**
@@ -43,8 +41,7 @@ public class GtfsRealtimeService {
 
             HttpResponse<byte[]> response = httpClient.send(
                     request,
-                    HttpResponse.BodyHandlers.ofByteArray()
-            );
+                    HttpResponse.BodyHandlers.ofByteArray());
 
             if (response.statusCode() != 200) {
                 throw new DataFetchException("Failed to fetch data. Status code: " + response.statusCode());
@@ -94,8 +91,7 @@ public class GtfsRealtimeService {
             var header = feedMessage.getHeader();
             return new FeedHeader(
                     header.getGtfsRealtimeVersion(),
-                    header.getTimestamp()
-            );
+                    header.getTimestamp());
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
             throw new ProtobufParseException("Error parsing protobuf data", e);
         }
@@ -131,7 +127,8 @@ public class GtfsRealtimeService {
 
         // Convert stop time updates
         List<StopTimeUpdate> stopTimeUpdates = new ArrayList<>();
-        for (com.google.transit.realtime.GtfsRealtime.TripUpdate.StopTimeUpdate gtfsStopUpdate : tripUpdate.getStopTimeUpdateList()) {
+        for (com.google.transit.realtime.GtfsRealtime.TripUpdate.StopTimeUpdate gtfsStopUpdate : tripUpdate
+                .getStopTimeUpdateList()) {
             StopTimeUpdate stopUpdate = new StopTimeUpdate();
             stopUpdate.setStopSequence(gtfsStopUpdate.getStopSequence());
             if (gtfsStopUpdate.hasStopId()) {
@@ -165,4 +162,3 @@ public class GtfsRealtimeService {
         return trip;
     }
 }
-
