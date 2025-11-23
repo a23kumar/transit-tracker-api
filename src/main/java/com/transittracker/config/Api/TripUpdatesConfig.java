@@ -1,4 +1,4 @@
-package com.transittracker.config;
+package com.transittracker.config.Api;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -7,7 +7,7 @@ import java.time.Duration;
 /**
  * Configuration class for API settings
  */
-public class ApiConfig {
+public class TripUpdatesConfig {
     public static final String GTFS_REALTIME_URL = "https://webapps.regionofwaterloo.ca/api/grt-routes/api/tripupdates";
     public static final URI GTFS_REALTIME_URI = URI.create(GTFS_REALTIME_URL);
 

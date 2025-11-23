@@ -47,7 +47,7 @@ public class DataPollingService {
         }
     }
 
-    @KafkaListener(topics = KafkaConfig.TOPIC_NAME, groupId = "transit-tracker-group")
+    @KafkaListener(topics = KafkaConfig.TOPIC_NAME, groupId = KafkaConfig.GROUP_ID)
     public void consumeGtfsData(TripUpdateEvent event) {
         logger.info("Received update from Kafka with {} trips. Updating repository.", event.getTrips().size());
         transitRepository.updateTrips(event.getTrips());

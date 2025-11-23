@@ -1,6 +1,6 @@
 package com.transittracker.service;
 
-import com.transittracker.config.ApiConfig;
+import com.transittracker.config.Api.TripUpdatesConfig;
 import com.transittracker.exception.DataFetchException;
 import com.transittracker.exception.ProtobufParseException;
 import com.transittracker.model.*;
@@ -24,7 +24,7 @@ public class GtfsRealtimeService {
     private final HttpClient httpClient;
 
     public GtfsRealtimeService() {
-        this.httpClient = ApiConfig.getHttpClient();
+        this.httpClient = TripUpdatesConfig.getHttpClient();
     }
 
     /**
@@ -36,7 +36,7 @@ public class GtfsRealtimeService {
     public byte[] fetchGtfsRealtimeData() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(ApiConfig.getGtfsRealtimeUri())
+                    .uri(TripUpdatesConfig.getGtfsRealtimeUri())
                     .build();
 
             HttpResponse<byte[]> response = httpClient.send(
