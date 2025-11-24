@@ -36,7 +36,7 @@ public class GtfsRealtimeService {
     public byte[] fetchGtfsRealtimeData() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(TripUpdatesConfig.getGtfsRealtimeUri())
+                    .uri(TripUpdatesConfig.getTripUpdatesUri())
                     .build();
 
             HttpResponse<byte[]> response = httpClient.send(

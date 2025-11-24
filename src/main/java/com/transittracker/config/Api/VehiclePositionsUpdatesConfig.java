@@ -8,7 +8,7 @@ public class VehiclePositionsUpdatesConfig {
     private static final String VEHICLE_UPDATES_PROTOBUF_URL = "https://webapps.regionofwaterloo.ca/api/grt-routes/api/vehiclepositions";
     public static final URI VEHICLE_UPDATES_PROTOBUF_URI = URI.create(VEHICLE_UPDATES_PROTOBUF_URL);
 
-    private static HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
+    private static final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
 
     /**
      * Gets the configured HTTP client for vehicle positions updates

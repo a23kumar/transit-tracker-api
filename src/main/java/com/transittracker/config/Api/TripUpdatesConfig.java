@@ -4,12 +4,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
+import com.transittracker.config.Api.Constants.LiveDataProtbufUrls;
+
 /**
  * Configuration class for API settings
  */
 public class TripUpdatesConfig {
-    public static final String GTFS_REALTIME_URL = "https://webapps.regionofwaterloo.ca/api/grt-routes/api/tripupdates";
-    public static final URI GTFS_REALTIME_URI = URI.create(GTFS_REALTIME_URL);
+    public static final URI TRIP_UPDATES_PROTOBUF_URI = URI.create(LiveDataProtbufUrls.TRIP_UPDATES_PROTOBUF_URL);
 
     private static final HttpClient HTTP_CLIENT = HttpClient.newBuilder()
             .connectTimeout(Duration.ofSeconds(10))
@@ -23,9 +24,9 @@ public class TripUpdatesConfig {
     }
 
     /**
-     * Gets the GTFS Realtime API URI
+     * Gets the Trip Updates API URI
      */
-    public static URI getGtfsRealtimeUri() {
-        return GTFS_REALTIME_URI;
+    public static URI getTripUpdatesUri() {
+        return TRIP_UPDATES_PROTOBUF_URI;
     }
 }

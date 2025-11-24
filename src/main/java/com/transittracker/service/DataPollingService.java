@@ -1,6 +1,6 @@
 package com.transittracker.service;
 
-import com.transittracker.config.KafkaConfig;
+import com.transittracker.config.Kafka.Constants.KafkaConstants;
 import com.transittracker.model.Trip;
 import com.transittracker.model.TripUpdateEvent;
 import com.transittracker.repository.TransitRepository;
@@ -39,16 +39,17 @@ public class DataPollingService {
 
             TripUpdateEvent event = new TripUpdateEvent(trips, System.currentTimeMillis());
 
-            logger.info("Fetched {} trips. Publishing to Kafka topic: {}", trips.size(), KafkaConfig.TOPIC_NAME);
-            kafkaTemplate.send(KafkaConfig.TOPIC_NAME, event);
+            logger.info("Fetched {} trips. Publishing to Kafka topic: {}", trips.size(),
+                    KafkaConstants.TRIP_UPDATES_TOPIC_NAME);
+            kafkaTemplate.send(KafkaConstants.TRIP_UPDATES_TOPIC_NAME, event);
 
         } catch (Exception e) {
             logger.error("Error fetching or publishing GTFS data", e);
         }
     }
 
-    @KafkaListener(topics = KafkaConfig.TOPIC_NAME, groupId = KafkaConfig.GROUP_ID)
-    public void consumeGtfsData(TripUpdateEvent event) {
+    @KafkaListener(topics = KafkaConstants.TRIP_UPDATES_TOPIC_NAME, groupId = KafkaConstants.GROUP_ID)
+    public void consumeTripUpdates(TripUpdateEvent event) {
         logger.info("Received update from Kafka with {} trips. Updating repository.", event.getTrips().size());
         transitRepository.updateTrips(event.getTrips());
     }
