@@ -1,5 +1,8 @@
 type Query {
     trips(routeId: String, vehicleId: String): [Trip]
+    vehiclePositions(routeId: String): [VehiclePosition]
+    routes: [Route]
+    stops(routeId: String): [Stop]
 }
 
 type Subscription {
@@ -14,6 +17,8 @@ type TripUpdateEvent {
 type Trip {
     tripId: String
     routeId: String
+    routeName: String
+    tripHeadsign: String
     scheduleRelationship: String
     vehicle: Vehicle
     stopTimeUpdates: [StopTimeUpdate]
@@ -24,9 +29,23 @@ type Vehicle {
     label: String
 }
 
+type VehiclePosition {
+    vehicleId: String
+    label: String
+    latitude: Float
+    longitude: Float
+    bearing: Float
+    speed: Float
+    timestamp: Float
+    tripId: String
+    routeId: String
+    routeName: String
+}
+
 type StopTimeUpdate {
     stopSequence: Int
     stopId: String
+    stopName: String
     arrival: StopTimeEvent
     departure: StopTimeEvent
 }
@@ -34,4 +53,17 @@ type StopTimeUpdate {
 type StopTimeEvent {
     time: Float
     delay: Int
+}
+
+type Route {
+    routeId: String!
+    routeShortName: String
+    routeLongName: String
+}
+
+type Stop {
+    stopId: String!
+    stopName: String
+    stopLat: Float
+    stopLon: Float
 }

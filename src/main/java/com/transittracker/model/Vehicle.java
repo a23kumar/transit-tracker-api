@@ -1,8 +1,5 @@
 package com.transittracker.model;
 
-/**
- * Domain model representing a transit vehicle
- */
 public class Vehicle {
     private String id;
     private String label;
@@ -31,4 +28,3 @@ public class Vehicle {
         this.label = label;
     }
 }
-

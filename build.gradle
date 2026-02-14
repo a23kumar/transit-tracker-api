@@ -17,22 +17,26 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.kafka:spring-kafka'
-    
-    // Protobuf Java library
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Database
+    runtimeOnly 'com.h2database:h2'
+
+    // Protobuf / GTFS Realtime
     implementation 'com.google.protobuf:protobuf-java:3.25.1'
-    
-    // GTFS Realtime bindings from local JAR
     implementation files('libs/gtfs-realtime-bindings.jar')
-    
+
+    // Reactive (for subscriptions)
+    implementation 'io.projectreactor:reactor-core'
+
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.graphql:spring-graphql-test'
-    testImplementation 'org.springframework.kafka:spring-kafka-test'
-    
+
     // Hot Reloading
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
@@ -40,4 +44,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-

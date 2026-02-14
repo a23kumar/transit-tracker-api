@@ -2,22 +2,16 @@ package com.transittracker.model;
 
 import java.util.List;
 
-/**
- * Domain model representing a transit trip
- */
 public class Trip {
     private String tripId;
     private String routeId;
+    private String routeName;
+    private String tripHeadsign;
     private String scheduleRelationship;
     private Vehicle vehicle;
     private List<StopTimeUpdate> stopTimeUpdates;
 
     public Trip() {
-    }
-
-    public Trip(String tripId, String routeId) {
-        this.tripId = tripId;
-        this.routeId = routeId;
     }
 
     // Getters and setters
@@ -35,6 +29,22 @@ public class Trip {
 
     public void setRouteId(String routeId) {
         this.routeId = routeId;
+    }
+
+    public String getRouteName() {
+        return routeName;
+    }
+
+    public void setRouteName(String routeName) {
+        this.routeName = routeName;
+    }
+
+    public String getTripHeadsign() {
+        return tripHeadsign;
+    }
+
+    public void setTripHeadsign(String tripHeadsign) {
+        this.tripHeadsign = tripHeadsign;
     }
 
     public String getScheduleRelationship() {
@@ -61,4 +71,3 @@ public class Trip {
         this.stopTimeUpdates = stopTimeUpdates;
     }
 }
-

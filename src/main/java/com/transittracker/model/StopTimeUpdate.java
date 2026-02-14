@@ -1,11 +1,9 @@
 package com.transittracker.model;
 
-/**
- * Domain model representing a stop time update for a trip
- */
 public class StopTimeUpdate {
     private int stopSequence;
     private String stopId;
+    private String stopName;
     private StopTimeEvent arrival;
     private StopTimeEvent departure;
 
@@ -28,6 +26,14 @@ public class StopTimeUpdate {
         this.stopId = stopId;
     }
 
+    public String getStopName() {
+        return stopName;
+    }
+
+    public void setStopName(String stopName) {
+        this.stopName = stopName;
+    }
+
     public StopTimeEvent getArrival() {
         return arrival;
     }
@@ -44,4 +50,3 @@ public class StopTimeUpdate {
         this.departure = departure;
     }
 }
-

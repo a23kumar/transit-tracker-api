@@ -1,11 +1,8 @@
 package com.transittracker.model;
 
-/**
- * Domain model representing a stop time event (arrival or departure)
- */
 public class StopTimeEvent {
-    private long time; // Unix timestamp in seconds
-    private int delay; // Delay in seconds
+    private long time;
+    private int delay;
 
     public StopTimeEvent() {
     }
@@ -31,4 +28,3 @@ public class StopTimeEvent {
         this.delay = delay;
     }
 }
-
